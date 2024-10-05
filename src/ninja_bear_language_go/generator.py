@@ -1,5 +1,5 @@
 from typing import Callable, List
-from ninja_bear import GeneratorBase, Property, PropertyType, NamingConventionType
+from ninja_bear import GeneratorBase, Property, PropertyType, NamingConventionType, DumpInfo
 from ninja_bear.base.generator_configuration import GeneratorConfiguration
 from ninja_bear.helpers.package_handling import evaluate_package
 
@@ -22,27 +22,31 @@ class Generator(GeneratorBase):
         return NamingConventionType.PASCAL_CASE
     
     def _line_comment(self, string: str) -> str:
-        return f' // {string}'
+        return f'// {string}'
     
-    def _dump(self, type_name: str, properties: List[Property]) -> str:
+    def _dump(self, info: DumpInfo) -> str:
+        properties = info.properties
+        indent = info.indent
+
         # Set package name.
         code = f'package {self.package}\n\n'
 
         # Start type definition.
-        code += f'var {type_name} = struct {{\n'
+        code += f'var {info.type_name} = struct {{\n'
 
         # Specify fields.
         for property in properties:
-            code += self._property_line(self._field, property)
+            code += self._property_line(self._field, property, indent)
         code += '}{\n'
 
         # Assign values.
         for property in properties:
-            code += self._property_line(self._value, property)
+            code += self._property_line(self._value, property, indent)
         return code + '}'
 
-    def _property_line(self, callout: Callable[[Property], str], property: Property):
-        return f'{' ' * self._indent}{callout(property)}\n'
+    def _property_line(self, callout: Callable[[Property], str], property: Property, indent: int):
+        comment = f' {self._line_comment(property.comment)}' if property.comment else ''
+        return f'{' ' * indent}{callout(property)}{comment}\n'
     
     def _field(self, property: Property) -> str:
         type = property.type
