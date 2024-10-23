@@ -16,4 +16,4 @@ class Config(LanguageConfigBase):
         return Generator  # TODO: Probably needs to be changed by the implementer.
 
     def _allowed_file_name_pattern(self) -> str:
-        return r'.+'  # TODO: Probably needs to be changed by the implementer.
+        return r'^([a-z]_*)+$'
