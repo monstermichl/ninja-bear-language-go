@@ -1,7 +1,7 @@
 from typing import Type
 
 from .generator import Generator
-from ninja_bear import LanguageConfigBase
+from ninja_bear import LanguageConfigBase, NamingConventionType
 
 
 class Config(LanguageConfigBase):
@@ -13,7 +13,10 @@ class Config(LanguageConfigBase):
         return 'go'
 
     def _generator_type(self) -> Type[Generator]:
-        return Generator  # TODO: Probably needs to be changed by the implementer.
+        return Generator
+    
+    def _default_file_naming_convention(self) -> NamingConventionType:
+        return NamingConventionType.SNAKE_CASE
 
     def _allowed_file_name_pattern(self) -> str:
         return r'^([a-z]_*)+$'
