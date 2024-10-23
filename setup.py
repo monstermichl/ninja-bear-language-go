@@ -17,7 +17,7 @@ setup(
         packages=find_packages(where='src'),
         py_modules=['ninja_bear_language_go'],
         entry_points = {
-            'ninja-bear-language-go': ['config=ninja_bear_language_go.config:Config']
+            'ninja_bear_language_go': ['config=ninja_bear_language_go.config:Config']
         },
         extras_require={
             'dev': [
