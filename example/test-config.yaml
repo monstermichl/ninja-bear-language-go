@@ -21,7 +21,6 @@ languages:
   - language: ninja-bear-language-go
     package: testpackage
     file_naming: snake
-    property_naming: pascal
 
 properties:
   - type: bool
