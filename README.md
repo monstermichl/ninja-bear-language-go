@@ -1,6 +1,7 @@
 # ninja-bear-language-go
 This [ninja-bear](https://pypi.org/project/ninja-bear) plugin adds support for the Go programming language.
 
+## Example configuration
 ```yaml
 languages:
   # -------------------------------------------------------------------------
@@ -60,4 +61,27 @@ properties:
   - type: string
     name: mySubstitutedString
     value: Sometimes I just want to scream ${myString}!  # To use the value of another property, simply use its name with ${}. E.g., ${myString}.
+```
+
+## Example output
+```go
+package testpackage
+
+var TestConfig = struct {
+    myBoolean           bool
+    myInteger           int
+    myFloat             float64
+    myCombinedFloat     float64
+    myDouble            float64
+    myRegex             string // Just another RegEx.
+    mySubstitutedString string
+}{
+    myBoolean:           true,
+    myInteger:           142,
+    myFloat:             322.0,
+    myCombinedFloat:     45724.0,
+    myDouble:            233.9,
+    myRegex:             "Test Reg(E|e)x", // Just another RegEx.
+    mySubstitutedString: "Sometimes I just want to scream Hello World!",
+}
 ```
